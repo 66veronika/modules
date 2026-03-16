@@ -108,6 +108,9 @@ def main():
         f"Plants added: {stats.count_plants(alice_garden)}, "
         f"Total growth: {stats.total_growth(alice_garden)}cm"
     )
+    # print(
+    #    f"Plant types: "
+    # )
 
     GardenManager.create_garden_network()
 
