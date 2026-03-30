@@ -40,8 +40,8 @@ class NumericProcessor(DataProcessor):
         if count == 0:
             raise ValueError("Empty numeric data")
 
-        return f"Processed {count} numeric values, sum = {total}, "
-        f"avg = {total/count}"
+        return (f"Processed {count} numeric values, sum = {total}, "
+                f"avg = {total/count}")
 
     def format_output(self, result: str) -> str:
         """Formats the output string"""
@@ -72,6 +72,7 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
+        """Validates if data is appropriate for this processor"""
         try:
             parts = data.split(":", 1)
             return len(parts) == 2
@@ -81,4 +82,20 @@ class LogProcessor(DataProcessor):
     def process(self, data: Any) -> str:
         """Processes the data and returns result string"""
         if not self.validate(data):
-            raise (ValueError("Failed data validation"))
+            raise ValueError("Failed data validation")
+        level, message = data.split(":", 1)
+        level = level.strip().upper()
+        message = message.strip()
+        prefix = "[ALERT]" if level == "ERROR" else f"[{level}]"
+        return f"{prefix} {level} level detected: {message}"
+
+    def format_output(self, result):
+        return super().format_output(result)
+
+def main() -> None:
+    print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
+    print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===")
+    data = [1, 2, 3, 4, 5]
+    print(f"Processing data: {data}")
+    print(f"Validation: ")
+
