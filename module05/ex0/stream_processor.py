@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List, Tuple
 from abc import ABC, abstractmethod
 
 
@@ -40,8 +40,8 @@ class NumericProcessor(DataProcessor):
         if count == 0:
             raise ValueError("Empty numeric data")
 
-        return (f"Processed {count} numeric values, sum = {total}, "
-                f"avg = {total/count}")
+        return (f"Processed {count} numeric values, sum={total}, "
+                f"avg={total/count}")
 
     def format_output(self, result: str) -> str:
         """Formats the output string"""
@@ -89,7 +89,8 @@ class LogProcessor(DataProcessor):
         prefix = "[ALERT]" if level == "ERROR" else f"[{level}]"
         return f"{prefix} {level} level detected: {message}"
 
-    def format_output(self, result):
+    def format_output(self, result: str) -> str:
+        """Formats the output string"""
         return super().format_output(result)
 
 
@@ -110,24 +111,24 @@ def main() -> None:
     print(f"Processing data: {data}")
     res = tp.process(data)
     print("Validation: Text data verified")
-    print(np.format_output(res))
+    print(tp.format_output(res))
 
     lp = LogProcessor()
     print("\nInitializing Log Processor...")
-    data = "\"ERROR: Connection timeout\""
-    print(f"Processing data: {data}")
+    data = "ERROR: Connection timeout"
+    print(f"Processing data: \"{data}\"")
     print("Validation: Log entry verified")
     res = lp.process(data)
     print(lp.format_output(res))
 
-    processors = [
-        ([1, 2, 3, 4, 5], NumericProcessor()),
-        ("Hello Nexus World", TextProcessor()),
-        ("ERROR: Connection timeout", LogProcessor()),
+    processors: List[Tuple[Any, DataProcessor]] = [
+        ([2, 2, 2], NumericProcessor()),
+        ("Hello, Nexus", TextProcessor()),
+        ("INFO: Connection timeout", LogProcessor()),
         ("bad data", NumericProcessor()),
     ]
 
-    print("\n=== Polymorphic Processing Demo ===")
+    print("\n=== Polymorphic Processing Demo ===\n")
     print("Processing multiple data types through same interface...")
     for i in range(len(processors)):
         data, processor = processors[i]
