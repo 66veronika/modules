@@ -92,10 +92,53 @@ class LogProcessor(DataProcessor):
     def format_output(self, result):
         return super().format_output(result)
 
+
 def main() -> None:
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
-    print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===")
+
+    np = NumericProcessor()
+    print("Initializing Numeric Processor...")
     data = [1, 2, 3, 4, 5]
     print(f"Processing data: {data}")
-    print(f"Validation: ")
+    res = np.process(data)
+    print("Validation: Numeric data verified")
+    print(np.format_output(res))
 
+    tp = TextProcessor()
+    print("\nInitializing Text Processor...")
+    data = "\"Hello Nexus World\""
+    print(f"Processing data: {data}")
+    res = tp.process(data)
+    print("Validation: Text data verified")
+    print(np.format_output(res))
+
+    lp = LogProcessor()
+    print("\nInitializing Log Processor...")
+    data = "\"ERROR: Connection timeout\""
+    print(f"Processing data: {data}")
+    print("Validation: Log entry verified")
+    res = lp.process(data)
+    print(lp.format_output(res))
+
+    processors = [
+        ([1, 2, 3, 4, 5], NumericProcessor()),
+        ("Hello Nexus World", TextProcessor()),
+        ("ERROR: Connection timeout", LogProcessor()),
+        ("bad data", NumericProcessor()),
+    ]
+
+    print("\n=== Polymorphic Processing Demo ===")
+    print("Processing multiple data types through same interface...")
+    for i in range(len(processors)):
+        data, processor = processors[i]
+        try:
+            result = processor.process(data)
+            print(f"Result {i+1}: {result}")
+        except ValueError as e:
+            print(f"Error: {e}")
+
+    print("\nFoundation systems online. Nexus ready.")
+
+
+if __name__ == "__main__":
+    main()
