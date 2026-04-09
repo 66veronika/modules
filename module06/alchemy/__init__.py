@@ -1,4 +1,9 @@
-__version__ = "1.0.0"
-__author__ = "Master Pythonicus"
+# alchemy/__init__.py
+from .elements import create_air # noqa
 
-from .elements import create_fire, create_water # noqa
+# Optional alias for distillation test
+from .potions import healing_potion as heal # noqa
+
+from . import transmutation # noqa
+
+from . import grimoire # noqa
