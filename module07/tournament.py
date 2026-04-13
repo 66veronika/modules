@@ -45,12 +45,11 @@ def describe_opponents(opponents:
     result = []
 
     for factory, strategy in opponents:
-        creature = factory.create_base()
 
-        creature_name = creature.name
+        factory_name = factory.__class__.__name__.replace("Factory", "")
+        factory_name = factory_name.replace("Creature", "")
         strategy_name = strategy.__class__.__name__.replace("Strategy", "")
-
-        result.append(f"{creature_name}+{strategy_name}")
+        result.append(f"{factory_name}+{strategy_name}")
 
     return "[ " + ", ".join(f"({r})" for r in result) + " ]"
 

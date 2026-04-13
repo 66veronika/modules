@@ -44,3 +44,4 @@ class DefensiveStrategy(BattleStrategy):
                             f"for this defensive strategy")
         print(creature.attack())
         print(creature.heal())
+
