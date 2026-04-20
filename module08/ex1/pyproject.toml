@@ -6,9 +6,9 @@ authors = ["matrix <matrix@matrix.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pandas = "^2.1.0"
-numpy = "^1.25.0"
-matplotlib = "^3.7.2"
+pandas = "^2.2.3"
+numpy = "^1.26.0"
+matplotlib = "^3.8.0"
 
 [build-system]
 requires = ["poetry-core"]
