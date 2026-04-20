@@ -4,7 +4,7 @@ import importlib.metadata
 def check_dependencies() -> bool:
     required = ["pandas", "numpy", "matplotlib"]
 
-    print("LOADING STATUS: Loading programs...")
+    print("LOADING STATUS: Loading programs...\n")
     print("Checking dependencies:")
 
     all_good = True
@@ -44,7 +44,7 @@ def run_analysis() -> None:
     plt.title("Matrix Data")
     plt.savefig("matrix_analysis.png")
 
-    print("Generating visualization...")
+    print("Generating visualization...\n")
     print("Analysis complete!")
     print("Results saved to: matrix_analysis.png")
 
