@@ -1,13 +1,37 @@
 import os
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    print("[FATAL] python-dotenv is not installed.")
+    print("Install it with: pip install python-dotenv")
+    exit(1)
+
+# API_KEY = "dbsuiosd"
+# DATABASE_URL = 'neo'
 
 
 def check_security(script_path: str) -> None:
     with open(script_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    bad_pattern_1 = 'API_KEY' + ' = "'
-    bad_pattern_2 = 'DATABASE_URL' + ' = "'
-    if content.count(bad_pattern_1) > 1 or content.count(bad_pattern_2) > 1:
+        lines = f.readlines()
+
+    found_secret = False
+
+    # We look for the variable name followed by =' or ="
+    # This avoids matching os.getenv("API_KEY")
+    for line in lines:
+        clean_line = line.replace(" ", "").strip()
+
+        if (
+            clean_line.startswith("API_KEY='") or
+            clean_line.startswith('API_KEY="') or
+            clean_line.startswith("DATABASE_URL='") or
+            clean_line.startswith('DATABASE_URL="')
+        ):
+
+            found_secret = True
+            break
+
+    if found_secret:
         print("[WARN] Potential hardcoded secrets detected!")
     else:
         print("[OK] No hardcoded secrets detected")
@@ -15,6 +39,7 @@ def check_security(script_path: str) -> None:
 
 def main():
     """Load and validate system configuration from environment variables."""
+
     env_found = load_dotenv()
 
     print("ORACLE STATUS: Reading the Matrix...")
