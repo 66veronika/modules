@@ -1,0 +1,16 @@
+• Space Stations: Basic data validation fundamentals
+• Alien Contacts: Custom validation rules and logic
+• Crew Management: Nested models and complex relationships
+
+III.4 Key Pydantic Concepts
+BaseModel
+The foundation of all Pydantic models. Inherit from BaseModel to create validated data
+classes.
+
+Field
+Use Field(...) to add validation constraints, descriptions, and default values to model
+attributes.
+
+model_validator
+Use the @model_validator(mode=’after’) decorator for custom validation logic that
+runs after Pydantic’s built-in validation. This replaces the deprecated @validator decorator from Pydantic v1.
