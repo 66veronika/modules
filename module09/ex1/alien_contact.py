@@ -23,7 +23,7 @@ class AlienContact(BaseModel):
     is_verified: bool = False
 
     @model_validator(mode="after")
-    def check_business_rules(self):
+    def check_business_rules(self) -> "AlienContact":
         if not self.contact_id.startswith("AC"):
             raise ValueError("Contact ID must start with 'AC'")
 
@@ -40,15 +40,15 @@ class AlienContact(BaseModel):
         return self
 
 
-def main():
+def main() -> None:
     print("Alien Contact Log Validation")
     print("======================================")
 
     try:
         contact = AlienContact(
             contact_id="AC_2024_001",
-            timestamp="2026-05-01T10:00:00",
-            contact_type="radio",
+            timestamp=datetime.now(),
+            contact_type=ContactType.radio,
             location="Area 51, Nevada",
             signal_strength=8.5,
             duration_minutes=45,
@@ -74,7 +74,7 @@ def main():
             contact_id="AC_BAD",
             timestamp=datetime.now(),
             location="Unknown",
-            contact_type="telepathic",
+            contact_type=ContactType.telepathic,
             signal_strength=5.0,
             duration_minutes=10,
             witness_count=1,
@@ -83,7 +83,8 @@ def main():
     except ValidationError as e:
         print("Expected validation error:")
         print("======================================")
-        print(e)
+        res = str(e).split("[")[0]
+        print(res)
 
 
 if __name__ == "__main__":
