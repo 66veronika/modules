@@ -36,7 +36,7 @@ def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
 
 
 @lru_cache(maxsize=128)
-def fibonacci(n):
+def fibonacci(n: int) -> int:
     if n < 2:
         return n
     return fibonacci(n-1) + fibonacci(n-2)
@@ -64,21 +64,31 @@ def spell_dispatcher() -> Callable[[Any], str]:
     return cast
 
 
-spells: list[int] = [40, 30, 20, 10]
-print("Testing spell reducer...")
-print(f"Sum: {spell_reducer(spells, "add")}")
-print(f"Product: {spell_reducer(spells, "multiply")}")
-print(f"Max: {spell_reducer(spells, "max")}")
-print(f"Min: {spell_reducer(spells, "min")}")
+def main() -> None:
+    spells: list[int] = [40, 30, 20, 10]
+    print("Testing spell reducer...")
+    print(f"Sum: {spell_reducer(spells, "add")}")
+    print(f"Product: {spell_reducer(spells, "multiply")}")
+    print(f"Max: {spell_reducer(spells, "max")}")
+    print(f"Min: {spell_reducer(spells, "min")}")
 
-print()
+    print()
 
-print("Testing spell dispatcher...")
-spell = spell_dispatcher()
-print(spell(42))
-print(spell("fireball"))
-print(spell([1, 2, 3]))
-print(spell({}))
+    print("Testing memoized fibonacci...")
+    print(f"Fib(0): {fibonacci(0)}")
+    print(f"Fib(1): {fibonacci(1)}")
+    print(f"Fib(10): {fibonacci(10)}")
+    print(f"Fib(15): {fibonacci(15)}")
 
- 
+    print()
 
+    print("Testing spell dispatcher...")
+    spell = spell_dispatcher()
+    print(spell(42))
+    print(spell("fireball"))
+    print(spell([1, 2, 3]))
+    print(spell({}))
+
+
+if __name__ == "__main__":
+    main()
